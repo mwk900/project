@@ -1,0 +1,86 @@
+{
+  "personal": {
+    "name": "[YOUR_NAME]",
+    "title": "[YOUR_TITLE]",
+    "bio": "[YOUR_BIO] - A brief 1-2 sentence introduction about yourself and what you do.",
+    "tagline": "Building digital experiences that matter.",
+    "email": "[EMAIL]",
+    "image": "/images/profile.jpg"
+  },
+  "skills": [
+    "React",
+    "Design",
+    "Strategy",
+    "Problem Solving",
+    "Communication"
+  ],
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "E-Commerce Platform",
+      "description": "A modern e-commerce platform built with React and Node.js, featuring real-time inventory management and seamless checkout experience.",
+      "image": "/images/project-1.jpg",
+      "technologies": ["React", "Node.js", "PostgreSQL", "Stripe"],
+      "link": "#",
+      "category": "Web"
+    },
+    {
+      "id": "project-2",
+      "title": "Task Management App",
+      "description": "A collaborative task management application with drag-and-drop functionality, real-time updates, and team analytics.",
+      "image": "/images/project-2.jpg",
+      "technologies": ["Next.js", "TypeScript", "Prisma", "WebSocket"],
+      "link": "#",
+      "category": "Web"
+    },
+    {
+      "id": "project-3",
+      "title": "Brand Identity System",
+      "description": "Complete brand identity design including logo, color system, typography, and comprehensive design guidelines.",
+      "image": "/images/project-3.jpg",
+      "technologies": ["Figma", "Illustrator", "Design Systems"],
+      "link": "#",
+      "category": "Design"
+    },
+    {
+      "id": "project-4",
+      "title": "Analytics Dashboard",
+      "description": "Interactive data visualization dashboard for tracking key business metrics with customizable widgets and export capabilities.",
+      "image": "/images/project-4.jpg",
+      "technologies": ["React", "D3.js", "Python", "REST API"],
+      "link": "#",
+      "category": "Web"
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "getting-started-with-react",
+      "title": "Getting Started with React in 2025",
+      "date": "2025-01-15",
+      "excerpt": "A beginner-friendly guide to starting your React journey, covering the fundamentals and modern best practices.",
+      "category": "Learning",
+      "content": "React has evolved significantly over the years, and getting started in 2025 means you have access to an incredible ecosystem of tools and patterns.\n\n## Why React?\n\nReact remains one of the most popular frontend frameworks for good reason. Its component-based architecture makes it intuitive to build complex UIs, and the community support is unmatched.\n\n## Setting Up Your First Project\n\nThe easiest way to get started is with Next.js, which provides a full-featured framework on top of React:\n\n```bash\nnpx create-next-app@latest my-app\n```\n\nThis gives you routing, server-side rendering, and optimized builds out of the box.\n\n## Key Concepts to Learn\n\n1. **Components** - The building blocks of any React application\n2. **State Management** - Understanding useState, useReducer, and context\n3. **Effects** - Side effects with useEffect\n4. **Custom Hooks** - Extracting reusable logic\n\n## Next Steps\n\nOnce you have the basics down, explore TypeScript integration, testing with Jest and React Testing Library, and state management solutions like Zustand or Redux Toolkit.\n\nThe React ecosystem is vast, but starting with these fundamentals will give you a solid foundation to build upon."
+    },
+    {
+      "slug": "lessons-from-my-first-project",
+      "title": "5 Lessons From My First Client Project",
+      "date": "2025-02-01",
+      "excerpt": "Reflecting on the key takeaways from delivering my first professional project, from scope management to client communication.",
+      "category": "Insights",
+      "content": "Completing my first client project was a milestone moment. Here are the five biggest lessons I took away from the experience.\n\n## 1. Scope Creep Is Real\n\nWhat started as a simple website quickly expanded into a full platform. Learning to set clear boundaries and document requirements upfront saved the project.\n\n## 2. Communication Is Everything\n\nRegular check-ins and transparent progress updates built trust with the client. Even when things went wrong, honest communication kept the relationship strong.\n\n## 3. Testing Saves Time\n\nEvery hour spent writing tests saved three hours of debugging later. Automated testing isn't optional - it's essential.\n\n## 4. Perfectionism Is the Enemy\n\nShipping a good product on time beats shipping a perfect product late. Learning to identify what truly matters to users helped me prioritize effectively.\n\n## 5. Documentation Matters\n\nWriting clear documentation for the client made handoff smooth and reduced follow-up questions by 80%. It's worth the extra effort.\n\n## Looking Forward\n\nThese lessons shaped how I approach every project now. The key takeaway? Soft skills are just as important as technical skills in delivering successful projects."
+    },
+    {
+      "slug": "building-accessible-websites",
+      "title": "Why Accessibility Should Be Your Default",
+      "date": "2025-02-20",
+      "excerpt": "Exploring why web accessibility isn't just a nice-to-have but a fundamental part of good web development practice.",
+      "category": "Projects",
+      "content": "Web accessibility often gets treated as an afterthought, but it should be built into every project from day one.\n\n## The Business Case\n\nOver 1 billion people worldwide have some form of disability. Making your website accessible isn't just the right thing to do - it expands your potential audience significantly.\n\n## Quick Wins\n\nHere are changes you can make today:\n\n- **Semantic HTML**: Use proper heading hierarchy, landmarks, and form labels\n- **Alt Text**: Describe images meaningfully for screen readers\n- **Color Contrast**: Ensure text meets WCAG AA standards (4.5:1 ratio)\n- **Keyboard Navigation**: Make sure all interactive elements are reachable via keyboard\n- **Focus Indicators**: Never remove focus outlines without providing alternatives\n\n## Testing Tools\n\n- **axe DevTools** - Browser extension for automated accessibility testing\n- **WAVE** - Web accessibility evaluation tool\n- **Lighthouse** - Built into Chrome DevTools\n- **Screen Readers** - Test with NVDA (Windows) or VoiceOver (Mac)\n\n## Building It Into Your Workflow\n\nThe best approach is to consider accessibility at every stage: design, development, and testing. It's much easier to build accessible from the start than to retrofit it later.\n\nStart with semantic HTML, add ARIA attributes where needed, test with keyboard navigation, and validate with automated tools. Your users will thank you."
+    }
+  ],
+  "social": {
+    "github": "[GITHUB_URL]",
+    "linkedin": "[LINKEDIN_URL]",
+    "twitter": "[TWITTER_URL]"
+  }
+}
