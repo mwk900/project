@@ -1,10 +1,10 @@
 {
   "personal": {
-    "name": "[YOUR_NAME]",
-    "title": "[YOUR_TITLE]",
-    "bio": "[YOUR_BIO] - A brief 1-2 sentence introduction about yourself and what you do.",
+    "name": "Mateusz Wozniak",
+    "title": "Junior Frontend Developer & Designer",
+    "bio": "I'm a passionate frontend developer and designer with a knack for creating engaging digital experiences. With a background in both coding and design, I bring a unique perspective to every project, ensuring that functionality and aesthetics go hand in hand.",
     "tagline": "Building digital experiences that matter.",
-    "email": "[EMAIL]",
+    "email": "mwk_ai@tuta.io",
     "image": "/images/profile.jpg"
   },
   "skills": [
