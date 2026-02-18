@@ -4,14 +4,13 @@ import { motion } from 'framer-motion';
 interface FormData {
   name: string;
   email: string;
-  subject: string;
   message: string;
+  website: string; // honeypot
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
-  subject?: string;
   message?: string;
 }
 
@@ -19,8 +18,8 @@ export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    subject: '',
     message: '',
+    website: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -33,7 +32,6 @@ export default function ContactForm() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
@@ -50,25 +48,28 @@ export default function ContactForm() {
     setStatus('submitting');
 
     try {
-      // Netlify Forms submission
-      const formBody = new URLSearchParams();
-      formBody.append('form-name', 'contact');
-      formBody.append('name', formData.name);
-      formBody.append('email', formData.email);
-      formBody.append('subject', formData.subject);
-      formBody.append('message', formData.message);
-
-      const response = await fetch('/', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formBody.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          website: formData.website,
+        }),
       });
 
       if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', message: '', website: '' });
       } else {
-        setStatus('error');
+        const data = await response.json().catch(() => null);
+        if (data?.error === 'rate_limit') {
+          setErrors({ message: 'Too many requests. Please wait a moment and try again.' });
+          setStatus('idle');
+        } else {
+          setStatus('error');
+        }
       }
     } catch {
       setStatus('error');
@@ -77,7 +78,7 @@ export default function ContactForm() {
 
   const handleChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
+    if (errors[field as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
@@ -95,30 +96,35 @@ export default function ContactForm() {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-text-primary mb-2">Message Sent!</h3>
+        <h3 className="text-xl font-semibold text-text-primary mb-2">Message sent!</h3>
         <p className="text-text-secondary">
-          Thanks for reaching out! I&apos;ll get back to you soon.
+          Thanks for reaching out. We&apos;ll get back to you soon.
         </p>
         <button
           onClick={() => setStatus('idle')}
           className="mt-6 px-6 py-2 text-sm font-medium text-accent border border-accent rounded-lg hover:bg-accent/10 transition-colors"
         >
-          Send Another Message
+          Send another message
         </button>
       </motion.div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      className="space-y-5"
-    >
-      {/* Hidden field for Netlify Forms */}
-      <input type="hidden" name="form-name" value="contact" />
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      {/* Honeypot - hidden from real users */}
+      <div className="absolute opacity-0 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={formData.website}
+          onChange={(e) => handleChange('website', e.target.value)}
+          autoComplete="off"
+          tabIndex={-1}
+        />
+      </div>
 
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-1.5">
@@ -159,25 +165,6 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-text-primary mb-1.5">
-          Subject
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="subject"
-          value={formData.subject}
-          onChange={(e) => handleChange('subject', e.target.value)}
-          placeholder="What's this about?"
-          className={`w-full px-4 py-3 rounded-lg border text-text-primary placeholder-text-secondary text-sm transition-colors focus:border-accent focus:ring-0 ${
-            errors.subject ? 'border-red-500' : 'border-border-color'
-          }`}
-          style={{ backgroundColor: 'var(--secondary-bg)' }}
-        />
-        {errors.subject && <p className="mt-1 text-sm text-red-500">{errors.subject}</p>}
-      </div>
-
-      <div>
         <label htmlFor="message" className="block text-sm font-medium text-text-primary mb-1.5">
           Message
         </label>
@@ -186,7 +173,7 @@ export default function ContactForm() {
           name="message"
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
-          placeholder="Tell me about your project or idea..."
+          placeholder="Tell us about your project..."
           rows={5}
           className={`w-full px-4 py-3 rounded-lg border text-text-primary placeholder-text-secondary text-sm transition-colors focus:border-accent focus:ring-0 resize-y ${
             errors.message ? 'border-red-500' : 'border-border-color'
@@ -198,14 +185,16 @@ export default function ContactForm() {
 
       {status === 'error' && (
         <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
-          Something went wrong. Please try again or email me directly.
+          Something went wrong. Please try again or email us directly.
         </div>
       )}
 
-      <button
+      <motion.button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full py-3 px-6 rounded-lg bg-accent text-sm font-semibold transition-all hover:scale-[1.02] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full py-3 px-6 rounded-lg bg-accent text-sm font-semibold transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ color: 'var(--primary-bg)' }}
       >
         {status === 'submitting' ? (
@@ -217,9 +206,9 @@ export default function ContactForm() {
             Sending...
           </span>
         ) : (
-          'Send Message'
+          'Send message'
         )}
-      </button>
+      </motion.button>
     </form>
   );
 }

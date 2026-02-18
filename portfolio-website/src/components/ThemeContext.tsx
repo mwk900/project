@@ -7,18 +7,18 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<ThemeMode>('dark');
+  const [theme, setTheme] = useState<ThemeMode>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem('theme') as ThemeMode | null;
-    if (stored === 'light' || stored === 'dark') {
-      setTheme(stored);
+    if (stored === 'dark') {
+      setTheme('dark');
     }
     setMounted(true);
   }, []);
@@ -34,7 +34,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // Prevent flash of wrong theme
   if (!mounted) {
     return <div style={{ visibility: 'hidden' }}>{children}</div>;
   }

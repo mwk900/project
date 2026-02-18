@@ -1,40 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# NorthSummit.agency
+
+Modern agency website built with Next.js, Tailwind CSS, and Framer Motion.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Contact Form (Resend)
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The contact form uses [Resend](https://resend.com) to send emails.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Local development
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Sign up at [resend.com](https://resend.com) and create an API key
+2. Create a `.env.local` file in the project root:
 
-## Learn More
+```
+RESEND_API_KEY=re_your_api_key_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+3. Run `npm run dev` and test the form at `/contact`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Production (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Go to your Vercel project settings
+2. Navigate to **Settings > Environment Variables**
+3. Add `RESEND_API_KEY` with your production API key
+4. Redeploy
 
-## Deploy on Vercel
+### Production (Netlify)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Go to your Netlify site settings
+2. Navigate to **Site configuration > Environment variables**
+3. Add `RESEND_API_KEY` with your production API key
+4. Trigger a redeploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+> **Note:** For Resend to send from a custom domain (e.g., `hello@northsummit.agency`), verify your domain in the Resend dashboard. Until then, use the default `onboarding@resend.dev` sender.
+
+## Portfolio Screenshots
+
+Project screenshots are stored in `public/projects/`. To add or replace:
+
+1. Take a screenshot of the live site (recommended: 1200x675px or 16:9 ratio)
+2. Save as PNG in `public/projects/`
+3. Update the project entry in `src/data/site.ts`
+
+Current projects and their image files:
+
+| Project | Image file |
+|---------|-----------|
+| Roofing Business | `roofing01.png` |
+| Plumber | `plumber001.png` |
+| Digital Agency | `digital-agency.png` |
+| Garage / Car Service | `garagecar.png` |
+| Gym / Personal Trainer | `gym001.png` |
+| Cleaners | `cleaners.png` |
+| Veterinary Surgeon | `sonia-vet.png` |
+
+## Deployment
+
+### Netlify
+
+The site is configured for Netlify deployment. Connect your GitHub repo and it will auto-detect the Next.js setup.
+
+### Vercel
+
+```bash
+npx vercel
+```
+
+## Editing Content
+
+All editable content (pricing, projects, process steps, agency info) is in `src/data/site.ts`.

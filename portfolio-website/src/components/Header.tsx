@@ -3,15 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
-import portfolioData from '@/data/portfolio.json';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
-];
+import { siteConfig } from '@/data/site';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -39,18 +31,23 @@ export default function Header() {
         className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
         aria-label="Main navigation"
       >
-        <Link
-          href="/"
-          className="text-xl font-bold text-accent hover:opacity-80 transition-opacity"
-        >
-          {portfolioData.personal.name.startsWith('[')
-            ? 'Portfolio'
-            : portfolioData.personal.name}
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <span
+            className="inline-block w-7 h-7 rounded-md bg-accent"
+            style={{
+              clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
+            }}
+            aria-hidden="true"
+          />
+          <span className="text-lg font-bold text-text-primary">
+            {siteConfig.agency.name}
+            <span className="text-accent">.agency</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+        <div className="hidden md:flex items-center gap-6">
+          {siteConfig.navigation.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -72,6 +69,19 @@ export default function Header() {
             </Link>
           ))}
           <ThemeToggle />
+          <a
+            href={`mailto:${siteConfig.agency.email}`}
+            className="px-4 py-2 text-sm font-medium text-text-secondary border border-border-color rounded-lg hover:text-accent hover:border-accent transition-colors"
+          >
+            Email us
+          </a>
+          <Link
+            href="/contact"
+            className="px-4 py-2 rounded-lg bg-accent text-sm font-semibold hover:opacity-90 transition-opacity"
+            style={{ color: 'var(--primary-bg)' }}
+          >
+            Get a quote
+          </Link>
         </div>
 
         {/* Mobile Controls */}
@@ -120,7 +130,7 @@ export default function Header() {
             style={{ backgroundColor: 'var(--primary-bg)' }}
           >
             <div className="px-4 py-4 flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {siteConfig.navigation.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -133,6 +143,19 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
+              <a
+                href={`mailto:${siteConfig.agency.email}`}
+                className="py-2 px-3 rounded-lg text-sm font-medium text-text-secondary hover:text-accent hover:bg-secondary-bg transition-colors"
+              >
+                Email us
+              </a>
+              <Link
+                href="/contact"
+                className="py-2 px-3 rounded-lg bg-accent text-sm font-semibold text-center"
+                style={{ color: 'var(--primary-bg)' }}
+              >
+                Get a quote
+              </Link>
             </div>
           </motion.div>
         )}

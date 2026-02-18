@@ -1,4 +1,4 @@
-import portfolioData from '@/data/portfolio.json';
+import { siteConfig } from '@/data/site';
 
 interface SEOProps {
   title?: string;
@@ -9,19 +9,19 @@ interface SEOProps {
   publishedTime?: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourportfolio.netlify.app';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://northsummit.agency';
 
 export function generateSEO({
   title,
-  description = `${portfolioData.personal.name} - ${portfolioData.personal.title}. ${portfolioData.personal.bio}`,
+  description = siteConfig.agency.description,
   path = '',
   image = '/images/og-image.jpg',
   type = 'website',
   publishedTime,
 }: SEOProps = {}) {
   const fullTitle = title
-    ? `${title} | ${portfolioData.personal.name}`
-    : `${portfolioData.personal.name} - ${portfolioData.personal.title} | Portfolio`;
+    ? `${title} | ${siteConfig.agency.domain}`
+    : `${siteConfig.agency.domain} — ${siteConfig.agency.tagline}`;
   const url = `${baseUrl}${path}`;
 
   return {
@@ -45,19 +45,14 @@ export function generateSEO({
   };
 }
 
-export function generatePersonSchema() {
+export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: portfolioData.personal.name,
-    jobTitle: portfolioData.personal.title,
+    '@type': 'Organization',
+    name: siteConfig.agency.domain,
+    description: siteConfig.agency.description,
     url: baseUrl,
-    image: `${baseUrl}${portfolioData.personal.image}`,
-    sameAs: [
-      portfolioData.social.github,
-      portfolioData.social.linkedin,
-      portfolioData.social.twitter,
-    ].filter((url) => url && !url.startsWith('[')),
+    email: siteConfig.agency.email,
   };
 }
 
@@ -65,7 +60,7 @@ export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: `${portfolioData.personal.name} Portfolio`,
+    name: siteConfig.agency.domain,
     url: baseUrl,
   };
 }
@@ -82,9 +77,9 @@ export function generateArticleSchema(post: {
     headline: post.title,
     datePublished: post.date,
     description: post.excerpt,
-    author: {
-      '@type': 'Person',
-      name: portfolioData.personal.name,
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.agency.domain,
     },
     url: `${baseUrl}/blog/${post.slug}`,
   };

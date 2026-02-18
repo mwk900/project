@@ -5,7 +5,7 @@ interface ProjectCardProps {
   title: string;
   description: string;
   image: string;
-  technologies: string[];
+  technologies: readonly string[];
   link: string;
 }
 
@@ -18,8 +18,10 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <motion.article
-      whileHover={{ y: -4 }}
-      className="group rounded-xl border border-border-color overflow-hidden transition-shadow hover:shadow-xl hover:shadow-accent/5"
+      whileHover={{ y: -4, scale: 1.04 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="group rounded-xl border border-border-color overflow-hidden transition-shadow hover:shadow-xl hover:shadow-accent/10"
       style={{ backgroundColor: 'var(--secondary-bg)' }}
     >
       <div className="relative aspect-video overflow-hidden bg-border-color">
@@ -34,7 +36,6 @@ export default function ProjectCard({
             target.style.display = 'none';
           }}
         />
-        {/* Placeholder when image is missing */}
         <div className="absolute inset-0 flex items-center justify-center text-text-secondary text-sm">
           <svg
             width="48"
@@ -70,7 +71,7 @@ export default function ProjectCard({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
         >
-          View Project
+          View live
           <svg
             width="14"
             height="14"
